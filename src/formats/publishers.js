@@ -1,7 +1,7 @@
 const defaults = {
   delimiter: ', ',
   lastDelimiter: ', and ',
-  maxNames: Infinity,
+  maxNames: 999, // Infinity won't export :(
   formatName: (author) => {
     let {given: first, family: last} = author
     first = first.split('.').join('. ')

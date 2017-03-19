@@ -20,13 +20,13 @@ function cite (ref, opts) {
 
 function authors (authors, opts) {
   const {
-    maxNames = Infinity,
-    delimiter = ', ',
-    lastDelimiter = ', and ',
+    maxNames,
+    delimiter,
+    lastDelimiter,
     formatName = a => `${a.given} ${a.family}`
   } = opts
 
-  const limit = Math.max(maxNames, authors.length)
+  const limit = Math.min(maxNames, authors.length)
   const allNames = (limit === authors.length)
   let cnt = 0
   const noWrap = {whiteSpace: 'nowrap'}
