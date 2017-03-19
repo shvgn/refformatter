@@ -1,15 +1,12 @@
 import React, {Component} from 'react'
+import publishers from '../../formats/publishers'
 
 class CiteFormat extends Component {
   constructor () {
     super()
     this.handleChange = this.handleChange.bind(this)
-    this.knownFormats = [
-      {abbr: 'apl', name: 'Applied Physic Letters'},
-      {abbr: 'prb', name: 'Physical Review B'},
-      {abbr: 'pssb', name: 'Physica Status Solidi B'},
-      {abbr: 'pssc', name: 'Physica Status Solidi C'}
-    ]
+    this.knownFormats = Object.keys(publishers)
+      .map(p => ({abbr: p, name: publishers[p].name}))
   }
 
   handleChange (e) {
