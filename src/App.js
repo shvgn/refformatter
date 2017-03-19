@@ -13,9 +13,11 @@ class App extends Component {
     this.deleteReference = this.deleteReference.bind(this)
     this.moveReferenceUp = this.moveReferenceUp.bind(this)
     this.moveReferenceDown = this.moveReferenceDown.bind(this)
+    this.setFormat = this.setFormat.bind(this)
 
     this.state = {
-      references: []
+      references: [],
+      format: 'apl'
     }
   }
 
@@ -91,6 +93,12 @@ class App extends Component {
     })
   }
 
+  setFormat (format) {
+    this.setState((prevState, props) => {
+      return Object.assign(prevState, {format})
+    })
+  }
+
   render () {
     return (
       <div style={{
@@ -105,7 +113,10 @@ class App extends Component {
           moveReferenceUp={this.moveReferenceUp}
           moveReferenceDown={this.moveReferenceDown}
           />
-        <Formatter {...this.state} />
+        <Formatter
+          {...this.state}
+          setFormat={this.setFormat}
+          />
       </div>
     )
   }
