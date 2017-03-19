@@ -20,7 +20,14 @@ class Reference extends Component {
         </div>
 
         <div style={{fontSize: 'smaller', marginBottom: '0.3rem'}}>
-          {author.map(a => `${a.given} ${a.family}`).join(', ')}
+          {author
+            .map(a => `${a.given} ${a.family}`)
+            .map((a, i) => (
+              <span style={{whiteSpace: 'nowrap'}} key={a}>
+                {a}{ (i < author.length - 1) ? ', ' : '' }
+              </span>
+            ))
+          }
         </div>
 
         <div style={{fontSize: 'smaller'}}>
