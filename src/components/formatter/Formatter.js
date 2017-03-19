@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 
-export default class Formatter extends Component {
+class Formatter extends Component {
   render () {
     return (<div id='formatter'>
 
@@ -27,3 +27,5 @@ export default class Formatter extends Component {
     </div>)
   }
 }
+
+export default Formatter
