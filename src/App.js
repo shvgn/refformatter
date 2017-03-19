@@ -18,43 +18,42 @@ class App extends Component {
 
   addReference (doi) {
     const APIURL = 'https://api.crossref.org/works/'
-    const testPaper = '10.1002/pssc.201200953'
-    this.setState((prevState, props) => {
-      const {references} = prevState
-      references.push(doi)
-      return Object.assign(prevState, {references})
-    })
-    return
+    // const doi = '10.1002/pssc.201200953'
 
-    fetch(APIURL + testPaper, {
+    // eslint-disable-next-line
+    fetch(APIURL + doi, {
       headers: {
         Accept: 'application/json'
       }
     })
-      .then(resp => resp.json())
-      .then(
-        x => this.setState((state, props) => {
-          const {references} = state
-          references.push(JSON.stringify(x, null, 2))
-          return Object.assign(state, {references})
-        })
+      .then(resp => {
+        console.log(resp)
+        if (resp.status !== 200) throw resp.statusText
+        return resp.json()
+      })
+      .then(x => this.setState((prevState, props) => {
+        const {references} = prevState
+        console.log('pushing x:', x.message)
+        references.push(x.message)
+        return Object.assign(prevState, {references})
+      })
       )
-      .catch(console.warn)
+      .catch(console.warn) // TODO show error in the interface
   }
 
   render () {
-    return (<div id='app' >
-
-      <Constructor
-        {...this.state}
-        addReference={this.addReference.bind(this)}
-      />
-
-      <Formatter
-        {...this.state}
-      />
-
-    </div>
+    return (
+      <div style={{
+        display: 'flex',
+        backgroundColor: '#fee',
+        alignItems: 'stretch'
+      }}>
+        <Constructor
+          {...this.state}
+          addReference={this.addReference.bind(this)}
+          />
+        <Formatter {...this.state} />
+      </div>
     )
   }
 }

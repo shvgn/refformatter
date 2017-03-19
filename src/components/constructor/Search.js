@@ -13,15 +13,20 @@ class Search extends Component {
   render () {
     return (
       <div
-        style={{backgroundColor: '#ddd'}}>
+        style={{
+          backgroundColor: '#ddd'
+        }}>
 
         <form onSubmit={this.handleSubmit.bind(this)}>
           <input
             type='text'
             placeholder='DOI'
             style={{
+              width: '80%',
               fontSize: '1.3rem',
-              padding: '0.2rem'
+              padding: '0.2rem',
+              marginLeft: 'auto',
+              marginRight: 'auto'
             }}
           />
         </form>

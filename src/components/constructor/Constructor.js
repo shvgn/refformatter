@@ -5,7 +5,10 @@ import RefList from './RefList'
 class Constructor extends Component {
   render () {
     return (
-      <div id='constructor'>
+      <div style={{
+        backgroundColor: '#f0f8ff',
+        flexGrow: 1
+      }}>
         <h2>Constructor</h2>
         <Search {...this.props} />
         <RefList {...this.props} />
