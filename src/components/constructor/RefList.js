@@ -7,7 +7,7 @@ class RefList extends Component {
     const len = references.length
 
     return (
-      <ol>
+      <ol style={{overflowY: 'scroll'}}>
         {references.map((r, i) => (
           <li key={r.DOI} style={{marginBottom: '1.5rem'}}>
             <Reference

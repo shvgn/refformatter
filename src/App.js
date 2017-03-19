@@ -24,8 +24,10 @@ class App extends Component {
     const refs = [
       '10.1002/pssc.201200953',
       '10.1109/5.771073',
-      '10.21883/FTP.2017.03.44215.8287',
-      '10.1103/PhysRevB.81.100411'
+      '10.21883/FTP.2017.03.44215.8287', // Russian
+      '10.1093/0199288917.001.0001', // Book
+      '10.1103/PhysRevB.81.100411',
+      '10.1097/SGA.0b013e3181ca03b9'
     ]
     refs.forEach(ref => this.addReference(ref))
   }

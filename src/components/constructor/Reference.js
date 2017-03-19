@@ -3,16 +3,21 @@ import {dateFromParts} from '../../helpers'
 
 class Reference extends Component {
   render () {
+    // Journal title
+    const shortContainerTitle = this.props['short-container-title'][0] || this.props['container-title'][0]
+
     const {title, author, volume, page, issue, issued} = this.props
     const doi = this.props.DOI
     const issuedDate = dateFromParts(issued['date-parts'][0])
-
-    // Journal title
-    const shortContainerTitle = this.props['short-container-title'][0] || this.props['container-title'][0]
+    const metaStyle = {marginRight: '1em', whiteSpace: 'nowrap'}
 
     // The availability of buttons
     const upDisabled = (this.props.moveUp === null)
     const downDisabled = (this.props.moveDown === null)
+    const buttonStyle = {
+      marginRight: '1em',
+      fontSize: '0.9rem'
+    }
 
     return (
       <div>
@@ -31,27 +36,30 @@ class Reference extends Component {
         </div>
 
         <div style={{fontSize: 'smaller'}}>
-          <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
-            {shortContainerTitle} <b>{volume}</b>, {issue}
+          {(shortContainerTitle)
+          ? <span style={metaStyle}>
+            {shortContainerTitle} <b>{volume}</b>
+            {issue ? ', ' + issue : ''}
             {page ? ', pp. ' + page : ''}
           </span>
+           : ''}
 
-          <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
+          <span style={metaStyle}>
             Issued: {issuedDate}
           </span>
 
-          <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
+          <span style={Object.assign({}, metaStyle, {marginRight: 0})}>
             DOI: <a href={`https://doi.org/${doi}`}>{doi}</a>
           </span>
         </div>
 
-        <div style={{fontSize: 'larger', marginTop: '0.3rem'}}>
+        <div style={{marginTop: '0.3rem'}}>
           <input
             type='button'
             value='↓ Move Down'
             disabled={downDisabled}
             onClick={() => this.props.moveDown(doi)}
-            style={{marginRight: '1em'}}
+            style={buttonStyle}
           />
 
           <input
@@ -59,14 +67,14 @@ class Reference extends Component {
             value='↑ Move Up'
             disabled={upDisabled}
             onClick={() => this.props.moveUp(doi)}
-            style={{marginRight: '1em'}}
+            style={buttonStyle}
           />
 
           <input
             type='button'
             value='× Delete'
             onClick={() => this.props.delete(doi)}
-            style={{marginRight: '1em'}}
+            style={buttonStyle}
           />
         </div>
       </div>

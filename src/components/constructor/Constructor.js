@@ -7,7 +7,8 @@ class Constructor extends Component {
     return (
       <div style={{
         backgroundColor: '#f0f8ff',
-        flex: '50%'
+        flex: '50%',
+        maxHeight: '100%'
       }}>
         <h2>Constructor</h2>
         <Search {...this.props} />
