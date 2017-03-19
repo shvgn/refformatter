@@ -1,5 +1,53 @@
+/* COMMON */
+
 body {
+  padding:0;
   margin: 0;
-  padding: 0;
   font-family: sans-serif;
+}
+
+#app {
+  display: flex;
+  background-color: #fee;
+  align-items: stretch;
+}
+
+
+
+/* SEARCH AND CONSTRUCT */
+
+#constructor {
+  background-color: #f0f8ff;
+  flex-grow: 1;
+}
+
+#search {
+  background-color: #ddd;
+}
+
+#search__input {
+  font-size: 1.3rem;
+  /* padding: 0.2rem; */
+}
+
+#search__button {
+  font-size: 1.2rem;
+}
+
+
+
+/* FORMAT */
+
+#formatter {
+  background-color: #fff8f0;
+  flex-grow: 1;
+}
+
+#format {
+  background-color: #ddd;
+}
+
+#format__selector {
+  font-size: 1.3rem;
+  padding: 0.2rem;
 }
