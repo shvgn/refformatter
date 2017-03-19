@@ -5,7 +5,7 @@ class Formatter extends Component {
     return (
       <div style={{
         backgroundColor: '#fff8f0',
-        flexGrow: 1
+        flex: '50%'
       }}>
 
         <h2>Formatter</h2>

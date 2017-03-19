@@ -1,4 +1,39 @@
 
+moveBackward(arr, elem) {
+  moveElem(arr, elem, -1)
+}
+
+function moveForward(arr, elem) {
+  moveElem(arr, elem, 1)
+}
+
+function moveElem(arr, elem, direction) {
+  if (direction !== 1 || direction !== -1) {
+    throw new Error('Invalid direction, expected 1 or -1, but got: ' + direction)
+  }
+	const idx = arr.findIndex(x => x === elem) // 3
+  const notFound = (idx === -1)
+  const isAlone = (arr.length === 1)
+
+  let onEdge
+  if (direction === 1) {
+    onEdge = (idx === arr.length - 1)
+  } esle {
+    onEdge = (idx === 0)
+  }
+
+  if (notFound || onEdge || isAlone) return arr
+
+  const idx2 = idx + direction
+  const swapper = arr[idx2]
+  arr[idx2] = arr[idx]
+  arr[idx] = swapper
+  return arr
+}
+
+
+
+
 /*****************************************************
 Example
 
@@ -11,13 +46,7 @@ Example
   "message-version": "1.0.0",
   "message": {
     "indexed": {
-      "date-parts": [
-        [
-          2016,
-          11,
-          8
-        ]
-      ],
+      "date-parts": [ [2016, 11, 8] ],
       "date-time": "2016-11-08T06:41:49Z",
       "timestamp": 1478587309230
     },
@@ -84,51 +113,37 @@ Example
       {
         "given": "E. A.",
         "family": "Shevchenko",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "V. N.",
         "family": "Jmerik",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "A. M.",
         "family": "Mizerov",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "D. V.",
         "family": "Nechaev",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "A. A.",
         "family": "Sitnikova",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "S. V.",
         "family": "Ivanov",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       },
       {
         "given": "A. A.",
         "family": "Toropov",
-        "affiliation": [
-
-        ]
+        "affiliation": []
       }
     ],
     "member": "http://id.crossref.org/member/311",
@@ -183,3 +198,4 @@ Example
   }
 }
 */
+

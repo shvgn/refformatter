@@ -2,13 +2,18 @@ import React, { Component } from 'react'
 import './App.css'
 import Constructor from './components/constructor/Constructor'
 import Formatter from './components/formatter/Formatter'
+import {moveForward, moveBackward} from './helpers'
 
 class App extends Component {
 
   constructor () {
     super()
+
     this.addReference = this.addReference.bind(this)
     this.deleteReference = this.deleteReference.bind(this)
+    this.moveReferenceUp = this.moveReferenceUp.bind(this)
+    this.moveReferenceDown = this.moveReferenceDown.bind(this)
+
     this.state = {
       references: []
     }
@@ -16,7 +21,12 @@ class App extends Component {
 
   componentWillMount () {
     // TODO delete
-    this.addReference('10.1002/pssc.201200953')
+    const refs = [
+      '10.1002/pssc.201200953',
+      '10.1109/5.771073',
+      '10.1103/PhysRevB.81.100411'
+    ]
+    refs.forEach(ref => this.addReference(ref))
   }
 
   deleteReference (doi) {
@@ -29,6 +39,14 @@ class App extends Component {
   }
 
   addReference (doi) {
+    if (this.state.references
+          .map(x => x.DOI.toLowerCase())
+          .filter(x => x === doi.toLowerCase())
+          .length > 0) {
+      console.warn(doi + ' already present')
+      return
+    }
+
     const APIURL = 'https://api.crossref.org/works/'
 
     // eslint-disable-next-line
@@ -50,6 +68,26 @@ class App extends Component {
       .catch(console.warn) // TODO show error in the interface
   }
 
+  moveReferenceDown (doi) {
+    this.setState((prevState, props) => {
+      const references = prevState.references.slice()
+      const refsWithDOI = references.filter(x => x.DOI === doi)
+      // No check for the array length here
+      moveForward(references, refsWithDOI[0])
+      return Object.assign(prevState, {references})
+    })
+  }
+
+  moveReferenceUp (doi) {
+    this.setState((prevState, props) => {
+      const references = prevState.references.slice()
+      const refsWithDOI = references.filter(x => x.DOI === doi)
+      // No check for the array length here
+      moveBackward(references, refsWithDOI[0])
+      return Object.assign(prevState, {references})
+    })
+  }
+
   render () {
     return (
       <div style={{
@@ -61,6 +99,8 @@ class App extends Component {
           {...this.state}
           addReference={this.addReference}
           deleteReference={this.deleteReference}
+          moveReferenceUp={this.moveReferenceUp}
+          moveReferenceDown={this.moveReferenceDown}
           />
         <Formatter {...this.state} />
       </div>
