@@ -5,7 +5,7 @@ class RefList extends Component {
     const {references} = this.props
     return (
       <ul id='chosen__refs__list'>
-        {references.map(r => <li>{r}</li>)}
+        {references.map(r => <li key={r}>{r}</li>)}
       </ul>
     )
   }
