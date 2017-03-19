@@ -8,7 +8,7 @@ class Reference extends Component {
     const issuedDate = dateFromParts(issued['date-parts'][0])
 
     // Journal title
-    const shortContainerTitle = this.props['short-container-title']
+    const shortContainerTitle = this.props['short-container-title'][0] || this.props['container-title'][0]
 
     // The availability of buttons
     const upDisabled = (this.props.moveUp === null)
