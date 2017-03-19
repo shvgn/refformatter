@@ -7,18 +7,29 @@ class App extends Component {
 
   constructor () {
     super()
+    this.addReference = this.addReference.bind(this)
+    this.deleteReference = this.deleteReference.bind(this)
     this.state = {
       references: []
     }
   }
 
-  deleteReference (doi) {
+  componentWillMount () {
+    // TODO delete
+    this.addReference('10.1002/pssc.201200953')
+  }
 
+  deleteReference (doi) {
+    this.setState((prevState, props) => {
+      const references = prevState.references.slice()
+      return Object.assign(prevState, {
+        references: references.filter(x => x.DOI !== doi)
+      })
+    })
   }
 
   addReference (doi) {
     const APIURL = 'https://api.crossref.org/works/'
-    // const doi = '10.1002/pssc.201200953'
 
     // eslint-disable-next-line
     fetch(APIURL + doi, {
@@ -27,17 +38,15 @@ class App extends Component {
       }
     })
       .then(resp => {
-        console.log(resp)
+        // console.log(resp)
         if (resp.status !== 200) throw resp.statusText
         return resp.json()
       })
       .then(x => this.setState((prevState, props) => {
-        const {references} = prevState
-        console.log('pushing x:', x.message)
+        const references = prevState.references.slice()
         references.push(x.message)
         return Object.assign(prevState, {references})
-      })
-      )
+      }))
       .catch(console.warn) // TODO show error in the interface
   }
 
@@ -50,7 +59,8 @@ class App extends Component {
       }}>
         <Constructor
           {...this.state}
-          addReference={this.addReference.bind(this)}
+          addReference={this.addReference}
+          deleteReference={this.deleteReference}
           />
         <Formatter {...this.state} />
       </div>
