@@ -1,46 +1,47 @@
 import React, {Component} from 'react'
+import {dateFromParts} from '../../helpers'
 
 class Reference extends Component {
   render () {
     const {title, author, volume, page, issue, issued} = this.props
     const doi = this.props.DOI
-
-    const issuedParts = issued['date-parts'][0]
-    const issuedDate = new Date(issuedParts[0], issuedParts[1] - 1, issuedParts[2])
+    const issuedDate = dateFromParts(issued['date-parts'][0])
 
     // Journal title
     const shortContainerTitle = this.props['short-container-title']
+
+    // The availability of buttons
     const upDisabled = (this.props.moveUp === null)
     const downDisabled = (this.props.moveDown === null)
 
     return (
       <div>
-        <div style={{fontWeight: 500, marginBottom: '0.3rem'}}>
+        <div style={{fontWeight: 500, marginBottom: '0.5rem'}}>
           {title}
         </div>
 
-        <div style={{fontSize: 'smaller', marginBottom: '0.3rem'}}>
+        <div style={{fontSize: 'smaller', marginBottom: '0.5rem'}}>
           {author
             .map(a => `${a.given} ${a.family}`)
-            .map((a, i) => (
-              <span style={{whiteSpace: 'nowrap'}} key={a}>
-                {a}{ (i < author.length - 1) ? ', ' : '' }
-              </span>
-            ))
+            .map(a => (<span style={{whiteSpace: 'nowrap'}} key={a}>{a}</span>))
+            .reduce((acc, elem) => {
+              return (acc === null) ? [elem] : [...acc, ', ', elem]
+            }, null)
           }
         </div>
 
         <div style={{fontSize: 'smaller'}}>
           <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
-            {shortContainerTitle} <b>{volume}</b> {issue}, pp. {page}
+            {shortContainerTitle} <b>{volume}</b>, {issue}
+            {page ? ', pp. ' + page : ''}
           </span>
 
           <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
-            Issued: {issuedDate.toLocaleDateString()}
+            Issued: {issuedDate}
           </span>
 
           <span style={{marginRight: '1em', whiteSpace: 'nowrap'}}>
-            DOI: {doi}
+            DOI: <a href={`https://doi.org/${doi}`}>{doi}</a>
           </span>
         </div>
 

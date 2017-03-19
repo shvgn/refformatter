@@ -46,3 +46,15 @@ export function moveBackward (arr, elem) {
 export function moveForward (arr, elem) {
   return moveElem(arr, elem, 1)
 }
+
+/**
+ * Construct the string date based on provided parst
+ * @param {Array} parts - [Y, M, D] or [D, M, Y], D can be omitted
+ */
+export function dateFromParts (_parts) {
+  let parts = _parts
+  if (!parts || parts.length === 0) return ''
+  if (parts[0] > 1000) parts = parts.reverse()
+  return parts.map(x => (x < 10) ? '0' + x : x)
+    .join('/')
+}
