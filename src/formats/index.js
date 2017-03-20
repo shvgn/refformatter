@@ -12,8 +12,10 @@ export default function (publisher) {
 
 function cite (ref, opts) {
   return (
-    <div>
+    <div style={{fontFamily: 'Times, serif'}}>
       {authors(ref.author, opts)}
+      {opts.afterAuthors}
+      {title(ref.title, opts)}
     </div>
   )
 }
@@ -47,5 +49,12 @@ function authors (authors, opts) {
         }, null)
       }
     </span>
+  )
+}
+
+function title (titles, opts) {
+  let title = opts.formatTitle(titles[0].trim())
+  return (
+    <span>{opts.leftQuote}{title}{opts.rightQuote}</span>
   )
 }
